@@ -9,7 +9,7 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
       {/* Background with slow fade-in */}
       <div 
         className="fixed top-0 left-0 w-full h-full bg-cover bg-center z-0 pointer-events-none animate-fade-in" 
-        style={{backgroundImage: "url('https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=2070&auto=format&fit=crop')", filter: 'blur(10px) brightness(0.4)'}}
+        style={{backgroundImage: "url('https://plus.unsplash.com/premium_photo-1661964014750-963a28aeddea?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')", filter: 'blur(10px) brightness(0.4)'}}
       ></div>
       
       <div className="relative z-10 flex flex-col min-h-screen">

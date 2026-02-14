@@ -15,26 +15,26 @@ const StatCard: React.FC<{ title: string; value: string | number }> = ({ title, 
 
 
 const AdminDashboard: React.FC = () => {
-    const { 
-        properties, 
-        enquiries, 
-        users, 
-        updatePropertyStatus, 
+    const {
+        properties,
+        enquiries,
+        users,
+        updatePropertyStatus,
         updateUserStatus,
         addUser,
-        seedDatabase 
+        seedDatabase
     } = useData();
 
     const [activeTab, setActiveTab] = useState('overview');
     const [isSeeding, setIsSeeding] = useState(false);
-    
+
     // Add Owner Modal State
     const [isAddOwnerModalOpen, setIsAddOwnerModalOpen] = useState(false);
     const [newOwnerEmail, setNewOwnerEmail] = useState('');
     const [newOwnerName, setNewOwnerName] = useState('');
 
     const owners = useMemo(() => users.filter(u => u.role === UserRole.OWNER), [users]);
-    
+
     const handlePropertyStatusToggle = (property: Property) => {
         const newStatus = property.status === PropertyStatus.ACTIVE ? PropertyStatus.INACTIVE : PropertyStatus.ACTIVE;
         updatePropertyStatus(property.id, newStatus);
@@ -49,7 +49,7 @@ const AdminDashboard: React.FC = () => {
 
     const handleAddOwner = async (e: React.FormEvent) => {
         e.preventDefault();
-        if(newOwnerEmail && newOwnerName) {
+        if (newOwnerEmail && newOwnerName) {
             await addUser(newOwnerEmail, newOwnerName);
             setIsAddOwnerModalOpen(false);
             setNewOwnerEmail('');
@@ -69,7 +69,7 @@ const AdminDashboard: React.FC = () => {
             setIsSeeding(false);
         }
     }
-    
+
     const renderOverview = () => (
         <div className="space-y-8 animate-fade-in-up">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -78,16 +78,6 @@ const AdminDashboard: React.FC = () => {
                 <StatCard title="Total Owners" value={owners.length} />
             </div>
 
-            <div className="p-6 bg-indigo-500/10 border border-indigo-500/20 rounded-xl">
-                <h3 className="text-lg font-semibold text-white mb-2">Development Tools</h3>
-                <p className="text-sm text-gray-400 mb-4">
-                    Use this tool to populate your new Firestore database with sample data (Properties, Owners, Enquiries). 
-                    Existing data with matching IDs will be overwritten.
-                </p>
-                <Button onClick={handleSeed} disabled={isSeeding} variant="secondary">
-                    {isSeeding ? 'Seeding...' : 'Seed Database with Mock Data'}
-                </Button>
-            </div>
         </div>
     );
 
@@ -129,9 +119,9 @@ const AdminDashboard: React.FC = () => {
             </div>
         </div>
     );
-    
+
     const renderEnquiries = () => (
-         <div className="space-y-4 animate-fade-in-up">
+        <div className="space-y-4 animate-fade-in-up">
             <h2 className="text-2xl font-semibold">All Enquiries</h2>
             <div className="bg-black/30 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg">
                 <ul role="list" className="divide-y divide-white/10">
@@ -161,11 +151,11 @@ const AdminDashboard: React.FC = () => {
                 <h2 className="text-2xl font-semibold">Property Owners</h2>
                 <Button onClick={() => setIsAddOwnerModalOpen(true)}>Authorize New Owner</Button>
             </div>
-            
+
             <div className="bg-black/30 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg overflow-x-auto">
                 <table className="min-w-full divide-y divide-white/10">
                     <thead className="bg-black/20">
-                         <tr>
+                        <tr>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Name</th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Email</th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
@@ -212,14 +202,14 @@ const AdminDashboard: React.FC = () => {
         <div className="max-w-7xl mx-auto space-y-8 animate-fade-in-up">
             <h1 className="text-4xl font-bold">Admin Dashboard</h1>
             <div>
-                 <div className="border-b border-white/10">
+                <div className="border-b border-white/10">
                     <nav className="-mb-px flex space-x-8" aria-label="Tabs">
                         {tabs.map(tab => (
-                             <button 
+                            <button
                                 key={tab}
-                                onClick={() => setActiveTab(tab)} 
+                                onClick={() => setActiveTab(tab)}
                                 className={`capitalize whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === tab ? 'border-indigo-500 text-indigo-400' : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-500'}`}
-                             >
+                            >
                                 {tab}
                             </button>
                         ))}
@@ -228,29 +218,29 @@ const AdminDashboard: React.FC = () => {
                 <div className="pt-8">{renderContent()}</div>
             </div>
 
-            <Modal 
-                isOpen={isAddOwnerModalOpen} 
-                onClose={() => setIsAddOwnerModalOpen(false)} 
+            <Modal
+                isOpen={isAddOwnerModalOpen}
+                onClose={() => setIsAddOwnerModalOpen(false)}
                 title="Authorize New Owner"
             >
                 <form onSubmit={handleAddOwner} className="space-y-4">
                     <p className="text-sm text-gray-400">
                         Add the Google Gmail address of the owner you wish to authorize. They will be able to log in immediately.
                     </p>
-                    <Input 
-                        id="newOwnerName" 
-                        label="Owner Name" 
-                        value={newOwnerName} 
-                        onChange={(e) => setNewOwnerName(e.target.value)} 
-                        required 
+                    <Input
+                        id="newOwnerName"
+                        label="Owner Name"
+                        value={newOwnerName}
+                        onChange={(e) => setNewOwnerName(e.target.value)}
+                        required
                     />
-                    <Input 
-                        id="newOwnerEmail" 
-                        type="email" 
-                        label="Google Email Address" 
-                        value={newOwnerEmail} 
-                        onChange={(e) => setNewOwnerEmail(e.target.value)} 
-                        required 
+                    <Input
+                        id="newOwnerEmail"
+                        type="email"
+                        label="Google Email Address"
+                        value={newOwnerEmail}
+                        onChange={(e) => setNewOwnerEmail(e.target.value)}
+                        required
                         placeholder="example@gmail.com"
                     />
                     <div className="pt-2">

@@ -27,48 +27,48 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setLoading(true);
       if (firebaseUser) {
         try {
-            // 1. Check if Admin
-            if (firebaseUser.email === ADMIN_EMAIL) {
-                setUser({
-                    id: firebaseUser.uid,
-                    email: firebaseUser.email!,
-                    name: firebaseUser.displayName || 'Admin',
-                    role: UserRole.ADMIN,
-                    status: 'ACTIVE'
-                });
+          // 1. Check if Admin
+          if (firebaseUser.email === ADMIN_EMAIL) {
+            setUser({
+              id: firebaseUser.uid,
+              email: firebaseUser.email!,
+              name: firebaseUser.displayName || 'Admin',
+              role: UserRole.ADMIN,
+              status: 'ACTIVE'
+            });
+          } else {
+            // 2. Check Firestore for whitelisted Owner
+            const usersRef = collection(db, 'users');
+            const q = query(usersRef, where("email", "==", firebaseUser.email));
+            const querySnapshot = await getDocs(q);
+
+            if (!querySnapshot.empty) {
+              const userDoc = querySnapshot.docs[0];
+              const userData = userDoc.data();
+
+              if (userData.status === 'BLOCKED') {
+                throw new Error("Your account has been blocked. Please contact admin.");
+              }
+
+              setUser({
+                id: userDoc.id, // Use Firestore ID
+                email: userData.email,
+                name: userData.name || firebaseUser.displayName || 'Owner',
+                role: UserRole.OWNER, // Enforce role from DB
+                status: userData.status
+              });
             } else {
-                // 2. Check Firestore for whitelisted Owner
-                const usersRef = collection(db, 'users');
-                const q = query(usersRef, where("email", "==", firebaseUser.email));
-                const querySnapshot = await getDocs(q);
-
-                if (!querySnapshot.empty) {
-                    const userDoc = querySnapshot.docs[0];
-                    const userData = userDoc.data();
-                    
-                    if (userData.status === 'BLOCKED') {
-                         throw new Error("Your account has been blocked. Please contact admin.");
-                    }
-
-                    setUser({
-                        id: userDoc.id, // Use Firestore ID
-                        email: userData.email,
-                        name: userData.name || firebaseUser.displayName || 'Owner',
-                        role: UserRole.OWNER, // Enforce role from DB
-                        status: userData.status
-                    });
-                } else {
-                    // Not authorized
-                    await signOut(auth);
-                    setUser(null);
-                    setError("Access denied. You must be added by an administrator.");
-                }
+              // Not authorized
+              await signOut(auth);
+              setUser(null);
+              setError("Access denied. You must be added by an administrator.");
             }
+          }
         } catch (err: any) {
-            console.error("Auth Error:", err);
-            await signOut(auth);
-            setUser(null);
-            setError(err.message || "Authentication failed");
+          console.error("Auth Error:", err);
+          await signOut(auth);
+          setUser(null);
+          setError(err.message || "Authentication failed");
         }
       } else {
         setUser(null);
@@ -90,11 +90,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const logout = useCallback(async () => {
     try {
-        await signOut(auth);
+      await signOut(auth);
     } catch (err) {
-        console.error(err);
+      console.error(err);
     }
   }, []);
+
 
   const value = { user, loginWithGoogle, logout, loading, error };
 

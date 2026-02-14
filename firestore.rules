@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Properties are public
+    match /properties/{property} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Everything else requires auth
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
