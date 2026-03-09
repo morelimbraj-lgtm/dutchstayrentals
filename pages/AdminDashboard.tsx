@@ -7,7 +7,7 @@ import Modal from '../components/ui/Modal';
 import Input from '../components/ui/Input';
 
 const StatCard: React.FC<{ title: string; value: string | number }> = ({ title, value }) => (
-    <div className="bg-black/40 backdrop-blur-lg border border-white/10 rounded-lg p-6">
+    <div className="bg-gray-900/60 backdrop-blur-lg border border-white/10 rounded-lg p-6">
         <p className="text-sm font-medium text-gray-400">{title}</p>
         <p className="mt-1 text-3xl font-semibold text-white">{value}</p>
     </div>
@@ -84,7 +84,7 @@ const AdminDashboard: React.FC = () => {
     const renderProperties = () => (
         <div className="space-y-4 animate-fade-in-up">
             <h2 className="text-2xl font-semibold">All Properties</h2>
-            <div className="bg-black/30 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg overflow-x-auto">
+            <div className="bg-gray-950/60 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg overflow-x-auto">
                 <table className="min-w-full divide-y divide-white/10">
                     <thead className="bg-black/20">
                         <tr>
@@ -123,7 +123,7 @@ const AdminDashboard: React.FC = () => {
     const renderEnquiries = () => (
         <div className="space-y-4 animate-fade-in-up">
             <h2 className="text-2xl font-semibold">All Enquiries</h2>
-            <div className="bg-black/30 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg">
+            <div className="bg-gray-950/60 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg">
                 <ul role="list" className="divide-y divide-white/10">
                     {enquiries.map((enquiry) => {
                         const property = properties.find(p => p.id === enquiry.propertyId);
@@ -152,7 +152,7 @@ const AdminDashboard: React.FC = () => {
                 <Button onClick={() => setIsAddOwnerModalOpen(true)}>Authorize New Owner</Button>
             </div>
 
-            <div className="bg-black/30 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg overflow-x-auto">
+            <div className="bg-gray-950/60 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg overflow-x-auto">
                 <table className="min-w-full divide-y divide-white/10">
                     <thead className="bg-black/20">
                         <tr>

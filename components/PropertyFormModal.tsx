@@ -12,14 +12,14 @@ interface PropertyFormModalProps {
   property?: Property | null;
 }
 
-const AMSTERDAM_LOCATIONS = [
-  "Amsterdam-Centrum (Central Amsterdam)",
-  "Amsterdam-Noord (North Amsterdam)",
-  "Amsterdam-West (West Amsterdam)",
-  "Amsterdam-Nieuw-West (New West Amsterdam)",
-  "Amsterdam-Zuid (South Amsterdam)",
-  "Amsterdam-Oost (East Amsterdam)",
-  "Amsterdam-Zuidoost (Southeast Amsterdam)"
+const DUTCH_LOCATIONS = [
+  "Amsterdam (North Holland)",
+  "Rotterdam (South Holland)",
+  "The Hague (South Holland)",
+  "Utrecht (Utrecht)",
+  "Eindhoven (North Brabant)",
+  "Groningen (Groningen)",
+  "Maastricht (Limburg)"
 ];
 
 const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ isOpen, onClose, onSubmit, property }) => {
@@ -124,7 +124,7 @@ const PropertyFormModal: React.FC<PropertyFormModalProps> = ({ isOpen, onClose, 
               required
             >
               <option value="" disabled>Select a district</option>
-              {AMSTERDAM_LOCATIONS.map(loc => (
+              {DUTCH_LOCATIONS.map(loc => (
                 <option key={loc} value={loc} className="bg-gray-900">{loc}</option>
               ))}
             </select>

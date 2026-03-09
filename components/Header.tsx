@@ -26,13 +26,16 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/5 shadow-2xl">
+    <header className="sticky top-0 z-50 bg-gray-950/60 backdrop-blur-xl border-b border-white/5 shadow-2xl">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">
             {/* Logo: Satoshi SemiBold, 22px, tracking 0.2px */}
-            <Link to="/" className="font-display font-semibold text-[22px] tracking-[0.2px] text-white">
-              Amsterdam<span className="text-indigo-400">Estates</span>
+            <Link to="/" className="flex items-center gap-3 group">
+              <img src="/logo.png" alt="DutchStay Rentals Logo" className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-110" />
+              <span className="font-display font-semibold text-[22px] tracking-[0.2px] text-white">
+                DutchStay<span className="text-indigo-400">Rentals</span>
+              </span>
             </Link>
           </div>
           <nav className="hidden md:flex items-center space-x-8 text-[14px] font-medium tracking-[0.3px] text-gray-300 font-sans">

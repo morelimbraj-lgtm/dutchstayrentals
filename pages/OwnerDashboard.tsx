@@ -153,7 +153,7 @@ const OwnerDashboard: React.FC = () => {
       {ownerProperties.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {ownerProperties.map((property) => (
-            <div key={property.id} className="group relative bg-black/40 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-xl transition-all hover:shadow-2xl hover:shadow-indigo-500/10">
+            <div key={property.id} className="group relative bg-gray-900/60 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-xl transition-all hover:shadow-2xl hover:shadow-indigo-500/10">
               {/* Image Area */}
               <div className="relative h-56 w-full overflow-hidden">
                 <img
@@ -214,7 +214,7 @@ const OwnerDashboard: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className="p-12 text-center bg-black/20 rounded-xl border border-white/5 border-dashed">
+        <div className="p-12 text-center bg-gray-950/40 rounded-xl border border-white/5 border-dashed">
           <p className="text-gray-400 text-lg">You have not listed any properties yet.</p>
           <Button onClick={handleOpenAddModal} variant="secondary" className="mt-4">Create Your First Listing</Button>
         </div>
@@ -225,7 +225,7 @@ const OwnerDashboard: React.FC = () => {
   const renderEnquiries = () => (
     <div className="space-y-6">
       <h2 className="text-2xl font-semibold text-white">Received Enquiries</h2>
-      <div className="bg-black/30 backdrop-blur-lg border border-white/10 rounded-xl shadow-lg overflow-hidden">
+      <div className="bg-gray-950/60 backdrop-blur-lg border border-white/10 rounded-xl shadow-lg overflow-hidden">
         <ul role="list" className="divide-y divide-white/10">
           {ownerEnquiries.length > 0 ? ownerEnquiries.map((enquiry) => {
             const property = ownerProperties.find(p => p.id === enquiry.propertyId);
@@ -295,7 +295,7 @@ const OwnerDashboard: React.FC = () => {
           <p className="text-gray-400">Loading tenant matches...</p>
         </div>
       ) : (
-        <div className="bg-black/30 backdrop-blur-lg border border-white/10 rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-gray-950/60 backdrop-blur-lg border border-white/10 rounded-xl shadow-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-white/10">
               <thead className="bg-white/5">
@@ -319,8 +319,8 @@ const OwnerDashboard: React.FC = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${parseInt(tenant.score) >= 80 ? 'bg-green-100/10 text-green-400' :
-                            parseInt(tenant.score) >= 60 ? 'bg-yellow-100/10 text-yellow-400' :
-                              'bg-red-100/10 text-red-400'
+                          parseInt(tenant.score) >= 60 ? 'bg-yellow-100/10 text-yellow-400' :
+                            'bg-red-100/10 text-red-400'
                           }`}>
                           {tenant.score} Match
                         </span>
