@@ -23,7 +23,6 @@ export default function Footer() {
 
         <div className="footer-links-group">
           <h4 className="footer-title">Contact</h4>
-          <p className="footer-contact">📍 Herengracht 123, Amsterdam</p>
           <p className="footer-contact">📞 +31684463167</p>
           <p className="footer-contact">✉️ info@dutchstayrentals.com</p>
         </div>
