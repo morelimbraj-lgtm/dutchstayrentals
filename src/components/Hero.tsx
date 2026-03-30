@@ -1,4 +1,24 @@
+import { motion } from 'framer-motion';
 import './Hero.css';
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.18,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: 'easeOut' as const },
+  },
+};
 
 export default function Hero() {
   return (
@@ -18,20 +38,27 @@ export default function Hero() {
         <div className="hero-overlay"></div>
       </div>
       
-      <div className="hero-content">
-        <span className="hero-badge">Welcome to Amsterdam</span>
-        <h1 className="hero-title">
+      <motion.div
+        className="hero-content"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.span className="hero-badge" variants={itemVariants}>
+          Welcome to Amsterdam
+        </motion.span>
+        <motion.h1 className="hero-title" variants={itemVariants}>
           Furnished long-term homes <br/> for expats in Amsterdam
-        </h1>
-        <p className="hero-subtitle">
+        </motion.h1>
+        <motion.p className="hero-subtitle" variants={itemVariants}>
           Experience the vibrant city life with premium, fully-furnished rental properties tailored for your comfort.
-        </p>
-        <div className="hero-actions">
+        </motion.p>
+        <motion.div className="hero-actions" variants={itemVariants}>
           <a href="#properties" className="btn-primary hero-btn">
             Browse Amsterdam Rentals
           </a>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

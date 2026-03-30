@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import './Properties.css';
 
 // Mock data for Amsterdam properties
@@ -59,6 +60,34 @@ const mockProperties = [
   }
 ];
 
+const headerVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: 'easeOut' as const },
+  },
+};
+
+const gridContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: 'easeOut' as const },
+  },
+};
+
 export default function Properties() {
   const [filterNeighborhood, setFilterNeighborhood] = useState('All');
   const [filterPrice, setFilterPrice] = useState('All');
@@ -83,13 +112,25 @@ export default function Properties() {
     <section id="properties" className="properties-section">
       <div className="section-container">
         
-        <div className="properties-header">
+        <motion.div
+          className="properties-header"
+          variants={headerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.6 }}
+        >
           <h2 className="section-title">Available Rentals</h2>
           <p className="properties-subtitle">Find your perfect home in Amsterdam, fully furnished and ready to move in.</p>
-        </div>
+        </motion.div>
 
         {/* Filters */}
-        <div className="filters-container">
+        <motion.div
+          className="filters-container"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
+        >
           <div className="filter-group">
             <label>Neighborhood</label>
             <select value={filterNeighborhood} onChange={(e) => setFilterNeighborhood(e.target.value)}>
@@ -119,13 +160,27 @@ export default function Properties() {
             setFilterPrice('All');
             setFilterBeds('All');
           }}>Clear Filters</button>
-        </div>
+        </motion.div>
 
         {/* Property Grid */}
-        <div className="properties-grid">
+        <motion.div
+          className="properties-grid"
+          variants={gridContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+        >
           {filteredProperties.length > 0 ? (
             filteredProperties.map(property => (
-              <div key={property.id} className="property-card">
+              <motion.div
+                key={property.id}
+                className="property-card"
+                variants={cardVariants}
+                whileHover={{
+                  y: -8,
+                  transition: { duration: 0.3, ease: 'easeOut' },
+                }}
+              >
                 <div className="property-image-wrapper">
                   <img src={property.image} alt={property.title} className="property-image" loading="lazy" />
                   {property.featured && <span className="property-badge">Featured</span>}
@@ -139,7 +194,7 @@ export default function Properties() {
                   </div>
                   <button className="btn-primary w-full mt-4">View Details</button>
                 </div>
-              </div>
+              </motion.div>
             ))
           ) : (
             <div className="no-results">
@@ -147,7 +202,7 @@ export default function Properties() {
               <p>Try adjusting your search filters.</p>
             </div>
           )}
-        </div>
+        </motion.div>
 
       </div>
     </section>
